@@ -1,0 +1,6 @@
+[host]
+192.168.1.142
+localhost
+ansible
+black
+postgres
