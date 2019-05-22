@@ -1,0 +1,27 @@
+server {
+        listen 80;
+        listen [::]:80;
+
+        server_name wordpress wordpress.com;
+        root /var/www/wordpress/wp-admin;
+        index install.php index.htm index.html;
+       
+
+        location / {
+                try_files $uri $uri/ /index.php?q=$uri&$args;
+        }
+
+	access_log /var/log/nginx/wordpress.access.log;
+	error_log /var/log/nginx/wordpress.error.log;
+
+	location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/php7.2-fpm.sock;              
+                include fastcgi_params;              
+        }                                  
+           
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+                root /var/www/wordpress;
+	}
+
+}
